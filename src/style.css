@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-slate-950;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent iOS auto-zoom on focus by enforcing 16px minimum font on mobile inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  @media (min-width: 640px) {
+    input, select, textarea {
+      font-size: 0.875rem !important; /* 14px on desktop */
+    }
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.25);
+}
+
+/* Belt Badge Styles */
+.belt-white { background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; }
+.belt-yellow { background: #fef08a; color: #713f12; border: 1px solid #eab308; }
+.belt-orange { background: #fed7aa; color: #7c2d12; border: 1px solid #f97316; }
+.belt-green { background: #bbf7d0; color: #14532d; border: 1px solid #22c55e; }
+.belt-blue { background: #bfdbfe; color: #1e3a8a; border: 1px solid #3b82f6; }
+.belt-purple { background: #e9d5ff; color: #581c87; border: 1px solid #a855f7; }
+.belt-brown { background: #d7ccc8; color: #3e2723; border: 1px solid #8d6e63; }
+.belt-black { background: #090d16; color: #f59e0b; border: 1px solid #f59e0b; }
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Mobile responsive table container */
+.mobile-scroll-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+/* Touch active scale effect */
+.touch-shrink {
+  transition: transform 0.15s ease;
+}
+.touch-shrink:active {
+  transform: scale(0.96);
+}
+
+/* Safe area padding for mobile notch & home bar */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
