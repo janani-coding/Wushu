@@ -9,8 +9,8 @@
       <!-- Admin Header -->
       <div class="h-20 px-6 flex items-center justify-between border-b border-slate-800/80">
         <router-link to="/admin/dashboard" class="flex items-center space-x-3 group">
-          <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
-            <SparklesIcon class="w-5 h-5" />
+          <div class="w-10 h-10 rounded-full bg-white p-0.5 border border-amber-500/40 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform shadow-glow-gold flex-shrink-0">
+            <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram Wushu Logo" class="w-full h-full object-contain" />
           </div>
           <div>
             <h1 class="font-heading text-xs font-black text-amber-400 tracking-wider">VILLUPURAM WUSHU</h1>
@@ -58,13 +58,23 @@
               <p class="text-[10px] text-amber-400 font-medium truncate">{{ authStore.currentUserProfile?.role || 'Academy Admin' }}</p>
             </div>
           </div>
-          <button 
-            @click="handleLogout" 
-            title="Logout"
-            class="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors touch-shrink"
-          >
-            <ArrowRightOnRectangleIcon class="w-5 h-5" />
-          </button>
+          <div class="flex items-center space-x-1">
+            <button 
+              @click="themeStore.toggleTheme()" 
+              :title="themeStore.mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+              class="p-2 text-amber-500 hover:bg-amber-500/10 rounded-lg transition-colors touch-shrink"
+            >
+              <SunIcon v-if="themeStore.mode === 'dark'" class="w-4 h-4 text-amber-400" />
+              <MoonIcon v-else class="w-4 h-4 text-slate-700" />
+            </button>
+            <button 
+              @click="handleLogout" 
+              title="Logout"
+              class="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors touch-shrink"
+            >
+              <ArrowRightOnRectangleIcon class="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </div>
     </aside>
@@ -82,8 +92,10 @@
         <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-md" @click="isMobileSidebarOpen = false"></div>
         <div class="relative flex-1 flex flex-col max-w-xs w-full bg-slate-900 border-r border-slate-800/90 z-50 shadow-2xl">
           <div class="p-5 flex items-center justify-between border-b border-slate-800/80">
-            <div class="flex items-center space-x-2">
-              <SparklesIcon class="w-5 h-5 text-amber-400" />
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-full bg-white p-0.5 border border-amber-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram Wushu Logo" class="w-full h-full object-contain" />
+              </div>
               <span class="font-heading text-sm font-black text-amber-400 tracking-wider">WUSHU ADMIN</span>
             </div>
             <button @click="isMobileSidebarOpen = false" class="p-1 text-slate-400 hover:text-white rounded-lg bg-slate-800/60">
@@ -134,9 +146,19 @@
           <Bars3Icon class="w-6 h-6" />
         </button>
         <span class="font-heading text-xs font-black text-amber-400 tracking-wider uppercase">VILLUPURAM WUSHU ADMIN</span>
-        <router-link to="/admin/profile" class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold text-xs flex items-center justify-center touch-shrink">
-          {{ authStore.currentUserProfile?.name?.charAt(0) || 'A' }}
-        </router-link>
+        <div class="flex items-center space-x-2">
+          <button 
+            @click="themeStore.toggleTheme()" 
+            :title="themeStore.mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+            class="p-2 text-amber-500 hover:bg-amber-500/10 rounded-xl border border-slate-700/60 transition-colors touch-shrink"
+          >
+            <SunIcon v-if="themeStore.mode === 'dark'" class="w-4 h-4 text-amber-400" />
+            <MoonIcon v-else class="w-4 h-4 text-slate-700" />
+          </button>
+          <router-link to="/admin/profile" class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold text-xs flex items-center justify-center touch-shrink">
+            {{ authStore.currentUserProfile?.name?.charAt(0) || 'A' }}
+          </router-link>
+        </div>
       </header>
 
       <!-- View Slot -->
@@ -152,7 +174,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import defaultLogo from '@/assets/logo.png'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
+import { useSettingsStore } from '@/stores/settings'
 import { usePaymentStore } from '@/stores/payment'
 import { useQueryStore } from '@/stores/query'
 import { useStudentStore } from '@/stores/student'
@@ -160,6 +185,7 @@ import { useTournamentStore } from '@/stores/tournament'
 import { useNotificationStore } from '@/stores/notification'
 import PwaInstallPrompt from '@/components/ui/PwaInstallPrompt.vue'
 import ToastContainer from '@/components/ui/ToastContainer.vue'
+import { SunIcon, MoonIcon } from '@heroicons/vue/24/solid'
 import { 
   HomeIcon, 
   UserGroupIcon, 
@@ -179,6 +205,8 @@ import {
 
 const router = useRouter()
 const authStore = useAuthStore()
+const settingsStore = useSettingsStore()
+const themeStore = useThemeStore()
 const paymentStore = usePaymentStore()
 const queryStore = useQueryStore()
 const studentStore = useStudentStore()

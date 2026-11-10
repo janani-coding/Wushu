@@ -1,19 +1,27 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
     <div class="text-center max-w-3xl mx-auto space-y-4">
-      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Heritage & Lineage</span>
-      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-slate-100">About Dragon Academy</h1>
+      <div class="w-24 h-24 mx-auto rounded-full bg-white p-1 border-2 border-amber-500/50 shadow-glow-gold flex items-center justify-center overflow-hidden">
+        <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram District Wushu Association" class="w-full h-full object-contain" />
+      </div>
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Heritage & Lineage • Regd. No. 95/2013</span>
+      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-slate-100">About Villupuram District Wushu Association</h1>
       <p class="text-slate-400 text-base">
         Dedicated to cultivating physical resilience, philosophical harmony, and championship combat standard in Wushu.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <img 
-        src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" 
-        alt="Kung Fu Master" 
-        class="rounded-3xl border border-amber-500/30 shadow-2xl w-full h-[400px] object-cover"
-      />
+      <div class="relative">
+        <img 
+          src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=800" 
+          alt="Kung Fu Master" 
+          class="rounded-3xl border border-amber-500/30 shadow-2xl w-full h-[400px] object-cover"
+        />
+        <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white p-1.5 border-2 border-amber-500 shadow-2xl flex items-center justify-center overflow-hidden z-20">
+          <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Association Crest" class="w-full h-full object-contain" />
+        </div>
+      </div>
       <div class="space-y-6">
         <h2 class="font-heading text-2xl sm:text-3xl font-bold text-amber-400">Grandmaster Philosophy</h2>
         <p class="text-slate-300 text-sm leading-relaxed">
@@ -44,3 +52,10 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import defaultLogo from '@/assets/logo.png'
+import { useSettingsStore } from '@/stores/settings'
+
+const settingsStore = useSettingsStore()
+</script>

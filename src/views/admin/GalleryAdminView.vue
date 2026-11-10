@@ -22,9 +22,10 @@
         class="glass-card rounded-2xl overflow-hidden relative group cursor-pointer"
       >
         <img 
-          :src="photo.photoUrl" 
+          :src="photo.photoUrl || fallbackImage" 
           :alt="photo.title" 
           @click="openLightbox(index)"
+          @error="handleImgError($event)"
           class="w-full h-56 object-cover hover:scale-105 transition-transform duration-300" 
         />
         <div class="p-4 flex items-center justify-between">
@@ -92,6 +93,7 @@
               <LoadingButton 
                 type="submit" 
                 :loading="galleryStore.loading" 
+                :disabled="!form.photoUrl || !form.title.trim()"
                 variant="primary" 
                 size="sm"
                 loading-text="Uploading..."
@@ -138,11 +140,25 @@ const openLightbox = (index) => {
   isLightboxOpen.value = true
 }
 
+const fallbackImage = 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800'
+const handleImgError = (e) => {
+  e.target.src = fallbackImage
+}
+
 const savePhoto = async () => {
+  if (!form.photoUrl) {
+    notificationStore.addToast('Please select a photo before saving.', 'warning')
+    return
+  }
+  if (!form.title.trim()) {
+    notificationStore.addToast('Please enter a photo title.', 'warning')
+    return
+  }
+
   let finalPhotoUrl = form.photoUrl
   let fileId = null
 
-  if (form.photoUrl && (form.photoUrl.startsWith('data:') || form.photoUrl.startsWith('blob:'))) {
+  if (form.photoUrl && form.photoUrl.startsWith('blob:')) {
     try {
       const uploadRes = await fileService.uploadFile(form.photoUrl, 'gallery')
       if (uploadRes && uploadRes.fileUrl) {
@@ -155,11 +171,12 @@ const savePhoto = async () => {
   }
 
   await galleryStore.addPhoto({
-    ...form,
+    title: form.title.trim(),
+    category: form.category,
     photoUrl: finalPhotoUrl,
     fileId
   })
-  notificationStore.addToast(`Photo stored in MongoDB GridFS & added to Gallery!`, 'success')
+  notificationStore.addToast(`Photo added to Gallery successfully!`, 'success')
   isModalOpen.value = false
   form.title = ''
   form.photoUrl = ''

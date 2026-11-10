@@ -30,8 +30,9 @@
         class="glass-card rounded-2xl overflow-hidden cursor-pointer group relative"
       >
         <img 
-          :src="photo.photoUrl" 
+          :src="photo.photoUrl || fallbackImage" 
           :alt="photo.title"
+          @error="handleImgError($event)"
           class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
@@ -67,6 +68,11 @@ import ImageViewer from '@/components/ui/ImageViewer.vue'
 const galleryStore = useGalleryStore()
 const isLightboxOpen = ref(false)
 const activePhotoIndex = ref(0)
+
+const fallbackImage = 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800'
+const handleImgError = (e) => {
+  e.target.src = fallbackImage
+}
 
 const categories = ['All', 'Tournament', 'Training', 'Events', 'Batch']
 

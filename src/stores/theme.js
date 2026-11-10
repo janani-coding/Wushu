@@ -40,6 +40,10 @@ export const useThemeStore = defineStore('theme', {
         root.classList.remove('dark')
         root.classList.add('light')
       }
+      const meta = document.querySelector('meta[name="theme-color"]')
+      if (meta) {
+        meta.setAttribute('content', this.mode === 'dark' ? '#0f172a' : '#f8fafc')
+      }
     }
   }
 })

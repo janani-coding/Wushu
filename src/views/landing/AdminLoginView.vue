@@ -4,9 +4,9 @@
       <!-- Glow Accent -->
       <div class="absolute -top-16 -left-16 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
-      <div class="space-y-2">
-        <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-          <SparklesIcon class="w-9 h-9" />
+      <div class="space-y-3">
+        <div class="w-24 h-24 mx-auto rounded-full bg-white p-1 border-2 border-amber-500/40 flex items-center justify-center shadow-glow-gold overflow-hidden">
+          <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram District Wushu Association" class="w-full h-full object-contain" />
         </div>
         <h2 class="font-heading text-2xl font-extrabold text-slate-100 tracking-wider">ADMINISTRATOR PORTAL</h2>
         <p class="text-xs text-slate-400">Authorized Master & Coaching Personnel Portal</p>
@@ -44,13 +44,16 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
+import defaultLogo from '@/assets/logo.png'
 import { useAuthStore } from '@/stores/auth'
+import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
-import { SparklesIcon, ShieldExclamationIcon } from '@heroicons/vue/24/solid'
+import { ShieldExclamationIcon } from '@heroicons/vue/24/solid'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const settingsStore = useSettingsStore()
 const notificationStore = useNotificationStore()
 
 const handleGoogleSignIn = async () => {

@@ -14,9 +14,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       manifest: {
-        name: 'Dragon Martial Arts Academy Management System',
-        short_name: 'Dragon KungFu',
-        description: 'Kung Fu Academy Management System Progressive Web Application',
+        name: 'Villupuram District Wushu Association',
+        short_name: 'Villupuram Wushu',
+        description: 'Official Villupuram District Wushu Association Management Progressive Web Application (Regd. No. 95/2013)',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
@@ -26,6 +26,16 @@ export default defineConfig({
             src: 'favicon.svg',
             sizes: '192x192 512x512',
             type: 'image/svg+xml'
+          },
+          {
+            src: 'icons/icon-192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'icons/icon-512.png',
+            sizes: '512x512',
+            type: 'image/png'
           }
         ]
       },

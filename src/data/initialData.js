@@ -1,7 +1,9 @@
+import defaultLogo from '@/assets/logo.png'
+
 export const INITIAL_SETTINGS = {
   academyName: "Villupuram District Wushu Association",
-  tagline: "Official Wushu & Martial Arts Association",
-  logoUrl: "",
+  tagline: "Official Wushu & Martial Arts Association (Regd.No.95/2013)",
+  logoUrl: defaultLogo,
   upiId: "wushuassociation@upi",
   upiQrCodeUrl: "",
   defaultMonthlyFee: 1500,

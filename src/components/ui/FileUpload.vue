@@ -242,6 +242,7 @@ const processSelectedFile = async (file) => {
     )
 
     if (uploadRes && uploadRes.fileUrl) {
+      localPreviewUrl.value = uploadRes.fileUrl
       emit('update:modelValue', uploadRes.fileUrl)
       emit('upload-success', uploadRes)
     }

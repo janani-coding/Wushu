@@ -6,8 +6,8 @@
     <header class="sticky top-0 z-30 bg-slate-900/90 border-b border-slate-800/90 backdrop-blur-xl px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-lg">
       <div class="flex items-center space-x-3">
         <router-link to="/student/dashboard" class="flex items-center space-x-3 group">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/30 to-amber-500/10 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-glow-gold group-hover:scale-105 transition-transform">
-            <SparklesIcon class="w-6 h-6" />
+          <div class="w-11 h-11 rounded-full bg-white p-0.5 border border-amber-500/40 flex items-center justify-center overflow-hidden shadow-glow-gold group-hover:scale-105 transition-transform flex-shrink-0">
+            <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram Wushu Logo" class="w-full h-full object-contain" />
           </div>
           <div>
             <h2 class="font-heading text-xs sm:text-sm font-black text-amber-400 tracking-wider">VILLUPURAM WUSHU</h2>
@@ -36,6 +36,16 @@
             {{ unreadNotifsCount }}
           </span>
         </router-link>
+
+        <!-- Theme Toggle -->
+        <button 
+          @click="themeStore.toggleTheme()" 
+          class="p-2 text-amber-500 hover:bg-amber-500/10 rounded-xl border border-slate-700/60 transition-colors touch-shrink"
+          :title="themeStore.mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        >
+          <SunIcon v-if="themeStore.mode === 'dark'" class="w-5 h-5 text-amber-400" />
+          <MoonIcon v-else class="w-5 h-5 text-slate-700" />
+        </button>
 
         <!-- Logout Button -->
         <button 
@@ -122,7 +132,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import defaultLogo from '@/assets/logo.png'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
+import { useSettingsStore } from '@/stores/settings'
 import { useStudentStore } from '@/stores/student'
 import { usePaymentStore } from '@/stores/payment'
 import { useQueryStore } from '@/stores/query'
@@ -131,6 +144,7 @@ import { useNotificationStore } from '@/stores/notification'
 import BeltBadge from '@/components/ui/BeltBadge.vue'
 import PwaInstallPrompt from '@/components/ui/PwaInstallPrompt.vue'
 import ToastContainer from '@/components/ui/ToastContainer.vue'
+import { SunIcon, MoonIcon } from '@heroicons/vue/24/solid'
 import { 
   HomeIcon, 
   UserIcon, 
@@ -146,6 +160,8 @@ import {
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const settingsStore = useSettingsStore()
+const themeStore = useThemeStore()
 const studentStore = useStudentStore()
 const paymentStore = usePaymentStore()
 const queryStore = useQueryStore()

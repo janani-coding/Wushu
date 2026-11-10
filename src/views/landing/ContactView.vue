@@ -1,8 +1,11 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12">
     <div class="text-center max-w-3xl mx-auto space-y-4">
-      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Get In Touch</span>
-      <h1 class="font-heading text-4xl font-extrabold text-slate-100">Contact Dragon Academy</h1>
+      <div class="w-24 h-24 mx-auto rounded-full bg-white p-1 border-2 border-amber-500/50 shadow-glow-gold flex items-center justify-center overflow-hidden">
+        <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram District Wushu Association" class="w-full h-full object-contain" />
+      </div>
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Get In Touch • Regd. No. 95/2013</span>
+      <h1 class="font-heading text-4xl font-extrabold text-slate-100">Contact Villupuram Wushu Association</h1>
       <p class="text-slate-400 text-sm">
         Have questions regarding admissions, batch timings, belt exams, or tournament participation? Contact us today.
       </p>
@@ -124,6 +127,7 @@
 
 <script setup>
 import { reactive } from 'vue'
+import defaultLogo from '@/assets/logo.png'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/vue/24/solid'

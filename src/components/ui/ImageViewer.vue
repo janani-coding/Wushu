@@ -96,7 +96,7 @@
         <p class="text-xs text-slate-400 flex items-center justify-center space-x-3">
           <span>Uploaded: {{ formatDate(currentImage.date || currentImage.createdAt) }}</span>
           <span class="text-slate-600">•</span>
-          <span class="text-amber-400 font-semibold">Dragon KungFu Academy</span>
+          <span class="text-amber-400 font-semibold">{{ settingsStore.settings?.academyName || 'Villupuram Wushu Association' }}</span>
         </p>
       </div>
     </div>
@@ -105,8 +105,11 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
 import { fileService } from '@/services/fileService'
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
+
+const settingsStore = useSettingsStore()
 
 const props = defineProps({
   images: {
@@ -272,8 +275,11 @@ const handleKeydown = (e) => {
   if (e.key === 'ArrowRight') nextImage()
 }
 
-const onImageError = () => {
+const onImageError = (e) => {
   isLoading.value = false
+  if (e && e.target) {
+    e.target.src = 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80&w=800'
+  }
 }
 
 onMounted(() => {

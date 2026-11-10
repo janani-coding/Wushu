@@ -6,12 +6,15 @@
         <!-- Academy Brand Info -->
         <div class="space-y-4">
           <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-              <SparklesIcon class="w-6 h-6" />
+            <div class="w-12 h-12 rounded-full bg-white p-0.5 border border-amber-500/40 flex items-center justify-center overflow-hidden shadow-glow-gold flex-shrink-0">
+              <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram District Wushu Association" class="w-full h-full object-contain" />
             </div>
-            <span class="font-heading text-lg font-bold text-slate-100 tracking-wider">
-              DRAGON ACADEMY
-            </span>
+            <div>
+              <span class="font-heading text-base font-bold text-slate-100 tracking-wider block">
+                VILLUPURAM WUSHU
+              </span>
+              <p class="text-[10px] uppercase font-bold tracking-widest text-amber-400">District Association</p>
+            </div>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
             Empowering students through traditional Shaolin Kung Fu, Modern Wushu, and combat fitness. Disciplined mind, invincible body.
@@ -76,8 +79,8 @@
 </template>
 
 <script setup>
+import defaultLogo from '@/assets/logo.png'
 import { useSettingsStore } from '@/stores/settings'
-import { SparklesIcon } from '@heroicons/vue/24/solid'
 
 const settingsStore = useSettingsStore()
 </script>

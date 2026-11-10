@@ -5,16 +5,16 @@
         
         <!-- Brand Logo & Title -->
         <router-link to="/" class="flex items-center space-x-3 group">
-          <div class="relative w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-glow-gold transition-transform group-hover:scale-105">
-            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden">
-              <img :src="settingsStore.settings.logoUrl" alt="Logo" class="w-8 h-8 object-contain" />
+          <div class="relative w-11 h-11 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-glow-gold transition-transform group-hover:scale-105 flex-shrink-0">
+            <div class="w-full h-full bg-white rounded-full flex items-center justify-center overflow-hidden p-0.5">
+              <img :src="settingsStore.settings?.logoUrl || defaultLogo" alt="Villupuram District Wushu Association Logo" class="w-full h-full object-contain" />
             </div>
           </div>
           <div>
-            <span class="font-heading text-lg font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">
-              DRAGON ACADEMY
+            <span class="font-heading text-base sm:text-lg font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">
+              VILLUPURAM WUSHU
             </span>
-            <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1">Kung Fu & Wushu</p>
+            <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400 -mt-1">District Association</p>
           </div>
         </router-link>
 
@@ -40,8 +40,8 @@
             class="p-2.5 rounded-xl text-amber-400 bg-slate-900 border border-slate-800 hover:border-amber-500/40 transition-colors"
             :title="themeStore.mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
           >
-            <SunIcon v-if="themeStore.mode === 'dark'" class="w-5 h-5" />
-            <MoonIcon v-else class="w-5 h-5 text-slate-300" />
+            <SunIcon v-if="themeStore.mode === 'dark'" class="w-5 h-5 text-amber-400" />
+            <MoonIcon v-else class="w-5 h-5 text-slate-700" />
           </button>
 
           <!-- Portal Auth Buttons -->
@@ -118,6 +118,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import defaultLogo from '@/assets/logo.png'
 import { useSettingsStore } from '@/stores/settings'
 import { useThemeStore } from '@/stores/theme'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/vue/24/solid'

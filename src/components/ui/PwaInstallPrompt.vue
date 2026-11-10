@@ -23,11 +23,11 @@
         class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 z-40 max-w-md bg-slate-900/95 border border-amber-500/40 p-4 rounded-2xl shadow-2xl backdrop-blur-xl flex items-center justify-between space-x-4"
       >
         <div class="flex items-center space-x-3">
-          <div class="w-12 h-12 bg-amber-500/20 border border-amber-500/40 rounded-xl flex items-center justify-center flex-shrink-0 text-amber-400">
-            <DevicePhoneMobileIcon class="w-6 h-6" />
+          <div class="w-12 h-12 bg-white border border-amber-500/40 rounded-full p-0.5 flex items-center justify-center flex-shrink-0 overflow-hidden shadow-glow-gold">
+            <img :src="defaultLogo" alt="Villupuram Wushu Logo" class="w-full h-full object-contain" />
           </div>
           <div>
-            <h4 class="text-sm font-bold text-slate-100">Install Dragon Academy App</h4>
+            <h4 class="text-sm font-bold text-slate-100">Install Villupuram Wushu App</h4>
             <p class="text-xs text-slate-400">Install as native PWA app for instant offline access & push notifications.</p>
           </div>
         </div>
@@ -52,7 +52,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { DevicePhoneMobileIcon, WifiIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import defaultLogo from '@/assets/logo.png'
+import { WifiIcon, XMarkIcon } from '@heroicons/vue/24/solid'
 
 const isOffline = ref(!navigator.onLine)
 const showInstallPrompt = ref(false)

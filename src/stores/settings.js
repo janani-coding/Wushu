@@ -15,7 +15,11 @@ export const useSettingsStore = defineStore('settings', {
 
       this._unsubscribe = dbService.subscribeToDocument('settings', 'academy_config', (data) => {
         if (data) {
-          this.settings = { ...INITIAL_SETTINGS, ...data };
+          this.settings = { 
+            ...INITIAL_SETTINGS, 
+            ...data,
+            logoUrl: data.logoUrl || INITIAL_SETTINGS.logoUrl
+          };
         }
       });
     },
@@ -32,7 +36,13 @@ export const useSettingsStore = defineStore('settings', {
       this.loading = true;
       try {
         const data = await dbService.getSettings();
-        if (data) this.settings = data;
+        if (data) {
+          this.settings = {
+            ...INITIAL_SETTINGS,
+            ...data,
+            logoUrl: data.logoUrl || INITIAL_SETTINGS.logoUrl
+          };
+        }
       } catch (err) {
         console.error('Fetch settings error:', err);
       } finally {

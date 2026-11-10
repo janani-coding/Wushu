@@ -190,13 +190,24 @@ class DatabaseService {
       try {
         const docRef = doc(db, 'settings', 'academy_config')
         const snap = await getDoc(docRef)
-        if (snap.exists()) return snap.data()
+        if (snap.exists()) {
+          const cloudData = snap.data()
+          return { ...INITIAL_SETTINGS, ...cloudData, logoUrl: cloudData.logoUrl || INITIAL_SETTINGS.logoUrl }
+        }
       } catch (err) {
         console.warn('Firestore settings fetch failed, using local storage', err)
       }
     }
     const local = localStorage.getItem('kungfu_settings')
-    return local ? JSON.parse(local) : INITIAL_SETTINGS
+    if (local) {
+      try {
+        const parsed = JSON.parse(local)
+        return { ...INITIAL_SETTINGS, ...parsed, logoUrl: parsed.logoUrl || INITIAL_SETTINGS.logoUrl }
+      } catch (e) {
+        console.warn('Local storage settings parse error', e)
+      }
+    }
+    return { ...INITIAL_SETTINGS }
   }
 
   async updateSettings(newSettings) {
